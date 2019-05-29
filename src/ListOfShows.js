@@ -6,7 +6,7 @@ class ListOfShows extends Component {
       super(props);
       // the following needed otherwise handleFormSubmit doesn't have a this
       //this.handleFormSubmit = this.handleFormSubmit.bind(this);
-      this.onSubmitSearch = this.onSubmitSearch.bind(this);
+//      this.onSubmitSearch = this.onSubmitSearch.bind(this);
 
       this.initialState = {
          searchTitle: '',
@@ -17,17 +17,9 @@ class ListOfShows extends Component {
       this.state = this.initialState;
    }
 
-   onSubmitSearch(event) {
-      event.preventDefault();
-      let form = event.target
-      let searchTitle = form.elements["searchTitle"].value
-
-      alert("search for: " + searchTitle)
-      this.searchForTvShows(searchTitle)
-   }
-
    searchForTvShows = what => {
-      let { searchTitle, searchYear } = this.state
+      const { params } = this.props.match
+      let { searchTitle, searchYear } = params
       if (searchTitle) {
          if (!searchYear) {
             searchYear = 2018
@@ -59,6 +51,7 @@ class ListOfShows extends Component {
 
    // Code is invoked after the component is mounted/inserted into the DOM tree.
    componentDidMount() {
+      
       this.searchForTvShows()
    }
 
@@ -69,6 +62,7 @@ class ListOfShows extends Component {
    }
 
    render() {
+      const { params } = this.props.match
       const { apiResult } = this.state
       let showList = ""
       let error = ''
@@ -103,9 +97,9 @@ class ListOfShows extends Component {
          showList = ""
       }
 
-      return (
+            return (
          <div className="container">
-            < div > <b>{header}</b></div >
+            < div><b>{header}</b></div >
             <Table variant="dark">{showList}</Table>
          </div>
       )
