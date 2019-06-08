@@ -5,9 +5,28 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #343A40;
+  color: white;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+a:link {
+  color: white;
+}
+/* A link that has been visited */
+a:visited {
+  color: lightgray;
+}
+/* A link that is hovered on */
+a:hover {
+  color: white;
+}
+/* A link that is selected */
+a:active {
+  color: green;
 }

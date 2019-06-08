@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Table, Image } from 'react-bootstrap'
+import { withRouter, BrowserRouter, Link} from 'react-router-dom'
 
 class ListOfShows extends Component {
    constructor(props) {
       super(props);
       // the following needed otherwise handleFormSubmit doesn't have a this
       //this.handleFormSubmit = this.handleFormSubmit.bind(this);
-//      this.onSubmitSearch = this.onSubmitSearch.bind(this);
+      //      this.onSubmitSearch = this.onSubmitSearch.bind(this);
 
       this.initialState = {
          searchTitle: '',
@@ -20,10 +21,15 @@ class ListOfShows extends Component {
    searchForTvShows = what => {
       const { params } = this.props.match
       let { searchTitle, searchYear } = params
-      if (searchTitle) {
+      if (searchTitle && searchTitle !== this.state.searchTitle) {
          if (!searchYear) {
             searchYear = 2018
          }
+         this.setState({
+            searchTitle: searchTitle,
+            searchYear: searchYear,
+            refresh: false
+         })
          //const url = 'http://www.omdbapi.com/?i=tt4061080&Season=1&apikey=1e9e9365'
          const baseUrl = 'http://www.omdbapi.com/?'
          let urlComponents = {
@@ -39,6 +45,7 @@ class ListOfShows extends Component {
             }
          }
          let url = baseUrl + urlElements.join('&');
+//         alert("fetching " + searchTitle);
          fetch(url)
             .then(result => result.json())
             .then(result => {
@@ -51,18 +58,24 @@ class ListOfShows extends Component {
 
    // Code is invoked after the component is mounted/inserted into the DOM tree.
    componentDidMount() {
-      
       this.searchForTvShows()
    }
 
+   componentDidUpdate() {
+      let aa = 0
+   }
    handleSelectShow = e => {
       const imdbID = e.target.parentElement.getAttribute('imdbid');
-      console.log('We need to get the details for ', imdbID);
-      alert(imdbID)
+      // console.log('We need to get the details for ', imdbID);
+//      alert('We need to get the details for '+imdbID);
    }
 
    render() {
       const { params } = this.props.match
+      if (this.state.refresh !== true && this.state.searchTitle !== params.searchTitle) {
+         this.setState({ refresh: true })
+         this.searchForTvShows()
+      }
       const { apiResult } = this.state
       let showList = ""
       let error = ''
@@ -72,10 +85,11 @@ class ListOfShows extends Component {
             showList = []
             if (shows !== undefined) {
                showList = shows.map((show, index) => {
+                  let poster = show.Poster && show.Poster !== 'N/A' ? show.Poster : "/no-poster.png"
                   return <tr imdbId={show.imdbID} key={index} onClick={this.handleSelectShow}>
-                     <td>{index + 1}</td>
-                     <td><Image height="75px" src={show.Poster} /></td>
-                     <td>{show.Title}</td>
+                     <td width="1px">{index + 1}</td>
+                     <td><Image height="75px" src={poster} /></td>
+                     <td><Link to={`/show/${show.imdbID}`}>{show.Title}</Link></td>
                      <td>{show.Year}</td>
                   </tr>
                })
@@ -97,10 +111,10 @@ class ListOfShows extends Component {
          showList = ""
       }
 
-            return (
+      return (
          <div className="container">
             < div><b>{header}</b></div >
-            <Table variant="dark">{showList}</Table>
+            <Table class="table table-sm" variant="dark">{showList}</Table>
          </div>
       )
    }
