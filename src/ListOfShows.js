@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Table, Image } from 'react-bootstrap'
-import { withRouter, BrowserRouter, Link} from 'react-router-dom'
+import { withRouter, BrowserRouter, Link } from 'react-router-dom'
+import { buildOmdbApiUrlFromComponents } from './Urls'
 
 class ListOfShows extends Component {
    constructor(props) {
@@ -30,22 +31,11 @@ class ListOfShows extends Component {
             searchYear: searchYear,
             refresh: false
          })
-         //const url = 'http://www.omdbapi.com/?i=tt4061080&Season=1&apikey=1e9e9365'
-         const baseUrl = 'http://www.omdbapi.com/?'
-         let urlComponents = {
-            'apikey': '1e9e9365',
+         const url = buildOmdbApiUrlFromComponents({
             'type': 'series',
             'year': searchYear,
             's': searchTitle,
-         };
-         let urlElements = []
-         for (var key in urlComponents) {
-            if (urlComponents.hasOwnProperty(key)) {
-               urlElements.push(key + '=' + encodeURIComponent(urlComponents[key]))
-            }
-         }
-         let url = baseUrl + urlElements.join('&');
-//         alert("fetching " + searchTitle);
+         })
          fetch(url)
             .then(result => result.json())
             .then(result => {
@@ -67,7 +57,7 @@ class ListOfShows extends Component {
    handleSelectShow = e => {
       const imdbID = e.target.parentElement.getAttribute('imdbid');
       // console.log('We need to get the details for ', imdbID);
-//      alert('We need to get the details for '+imdbID);
+      //      alert('We need to get the details for '+imdbID);
    }
 
    render() {
@@ -88,7 +78,7 @@ class ListOfShows extends Component {
                   let poster = show.Poster && show.Poster !== 'N/A' ? show.Poster : "/no-poster.png"
                   return <tr imdbId={show.imdbID} key={index} onClick={this.handleSelectShow}>
                      <td width="1px"><Link to={`/show/${show.imdbID}`}>{index + 1}</Link></td>
-                     <td><Link to={`/show/${show.imdbID}`}><Image height="75px" src={poster}/></Link></td>
+                     <td><Link to={`/show/${show.imdbID}`}><Image height="75px" src={poster} /></Link></td>
                      <td><Link to={`/show/${show.imdbID}`}>{show.Title}</Link></td>
                      <td><Link to={`/show/${show.imdbID}`}>{show.Year}</Link></td>
                   </tr>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Table, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { buildOmdbApiUrlFromComponents } from './Urls'
 
 export default class ShowInfo extends Component {
    constructor(props) {
@@ -16,18 +17,7 @@ export default class ShowInfo extends Component {
       const { params } = this.props.match
       let { imdbId } = params
       if (imdbId) {
-         const baseUrl = 'http://www.omdbapi.com/?'
-         let urlComponents = {
-            'apikey': '1e9e9365',
-            'i': imdbId
-         };
-         let urlElements = []
-         for (var key in urlComponents) {
-            if (urlComponents.hasOwnProperty(key)) {
-               urlElements.push(key + '=' + encodeURIComponent(urlComponents[key]))
-            }
-         }
-         let url = baseUrl + urlElements.join('&');
+         const url = buildOmdbApiUrlFromComponents({'i': imdbId})
          fetch(url)
             .then(result => result.json())
             .then(result => {
