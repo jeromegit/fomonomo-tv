@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Table, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-export default class ShowInfo extends Component {
+export default class episodeInfo extends Component {
    constructor(props) {
       super(props);
 
@@ -12,7 +12,7 @@ export default class ShowInfo extends Component {
       this.state = this.initialState;
    }
 
-   fetchShowInfo = what => {
+   fetchEpisodeInfo = what => {
       const { params } = this.props.match
       let { imdbId } = params
       if (imdbId) {
@@ -40,41 +40,34 @@ export default class ShowInfo extends Component {
 
    // Code is invoked after the component is mounted/inserted into the DOM tree.
    componentDidMount() {
-      this.fetchShowInfo()
+      this.fetchEpisodeInfo()
    }
 
-/*
    handleSelectSeason = e => {
       const season = e.target.parentElement.getAttribute('season');
       alert("need season:" + season)
    }
-*/
+
    render() {
       const { params } = this.props.match
       const { apiResult } = this.state
-      let showCard = ""
+      let episodeCard = ""
       let error = ''
       if (apiResult !== "") {
          if (apiResult.Response === "True") {
-            let showInfo = apiResult
-            let topItems = ['Title', 'Year', 'Rated', 'Released'];
-            const showCardTop = topItems.map((item) => {
-               return <div> <b>{item}:</b> {showInfo[item]}<br /></div>
+            let episodeInfo = apiResult
+            let topItems = ['Title', 'Season', 'Episode', 'Year', 'Rated', 'Released'];
+            const episodeCardTop = topItems.map((item) => {
+               return <div> <b>{item}:</b> {episodeInfo[item]}<br /></div>
             })
-            let bottomItems = ['Genre', 'Plot', 'Actors', 'Language', 'imdbRating'];
-            const showCardBottom = bottomItems.map((item) => {
-               return <div> <b>{item}:</b> {showInfo[item]}<br /></div>
+            let bottomItems = ['Plot', 'Actors', 'Director', 'Language', 'imdbRating'];
+            const episodeCardBottom = bottomItems.map((item) => {
+               return <div> <b>{item}:</b> {episodeInfo[item]}<br /></div>
             })
-            const totalSeasons = showInfo.totalSeasons;
-            let listOfSeasons = []
-            for(let season=1; season<=totalSeasons; season++) {
-               listOfSeasons.push(<li key={season}><Link to={`/season/${showInfo.imdbID}:${season}`}>Season #{season}</Link></li>)
-            }
-            showCard = <table><tr><td><Image height="180px" src={showInfo.Poster} /></td><td>{showCardTop}</td></tr>
-               <tr><td colSpan="2" valign="top">{showCardBottom}</td></tr>
-               <tr><td colSpan="2" valign="top"><br/><b>{totalSeasons} Seasons:</b><ul>{listOfSeasons}</ul></td></tr>
+            episodeCard = <table><tr><td><Image height="180px" width="200px" src={episodeInfo.Poster} /></td><td width="500px">{episodeCardTop}</td></tr>
+               <tr><td colSpan="2" valign="top">{episodeCardBottom}</td></tr>
             </table>
-            //            showCard = <div><Image height="200px" src={showInfo.Poster}/>{showCard}</div>
+            //            episodeCard = <div><Image height="200px" src={episodeInfo.Poster}/>{episodeCard}</div>
          } else if (apiResult.Error) {
             error = "Error calling API: " + apiResult.Error
          } else {
@@ -82,16 +75,16 @@ export default class ShowInfo extends Component {
          }
       }
       let header = ""
-      if (showCard !== "" && error === '') {
+      if (episodeCard !== "" && error === '') {
          header = "Results of search (" + apiResult.totalResults + ")"
       } else {
          header = error
-         showCard = error
+         episodeCard = error
       }
 
       return (
          <div className="container">
-            {showCard}
+            {episodeCard}
          </div>
       )
    }

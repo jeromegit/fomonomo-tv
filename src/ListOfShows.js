@@ -87,10 +87,10 @@ class ListOfShows extends Component {
                showList = shows.map((show, index) => {
                   let poster = show.Poster && show.Poster !== 'N/A' ? show.Poster : "/no-poster.png"
                   return <tr imdbId={show.imdbID} key={index} onClick={this.handleSelectShow}>
-                     <td width="1px">{index + 1}</td>
-                     <td><Image height="75px" src={poster} /></td>
+                     <td width="1px"><Link to={`/show/${show.imdbID}`}>{index + 1}</Link></td>
+                     <td><Link to={`/show/${show.imdbID}`}><Image height="75px" src={poster}/></Link></td>
                      <td><Link to={`/show/${show.imdbID}`}>{show.Title}</Link></td>
-                     <td>{show.Year}</td>
+                     <td><Link to={`/show/${show.imdbID}`}>{show.Year}</Link></td>
                   </tr>
                })
             } else {

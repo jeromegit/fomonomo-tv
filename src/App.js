@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Nav, Navbar, NavDropdown, Image } from 'react-bootstrap'
+import { Nav, Navbar, NavDropdown, Image, Container } from 'react-bootstrap'
 import { Route, NavLink, BrowserRouter as Router, Switch } from 'react-router-dom'
 import './App.css';
 import ListOfShows from './ListOfShows'
+import ListOfSeasonEpisodes from './ListOfSeasonEpisodes'
 import ShowInfo from './ShowInfo'
+import EpisodeInfo from './EpisodeInfo'
 import SearchForm from './SearchForm';
 import Home from './Home';
 import Notfound from './NotFound'
@@ -27,25 +29,29 @@ class App extends Component {
       return (
          <Router>
             <div className="container">
-               <Navbar expand="lg" bg="black">
-                  <Navbar.Brand href="/"><img
-                     src="/fmnm_blue.png"
-                     width="32"
-                     height="32"
-                     className="d-inline-block align-top"
-                     alt="React Bootstrap logo" />
-                  </Navbar.Brand>
-                  <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                  <SearchForm history={this.props.history}/>
-               <NavDropdown title="More" bg="dark" id="basic-nav-dropdown">
-                     <NavDropdown.Item href="/">Home</NavDropdown.Item>
-                     <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                  </NavDropdown>
+               <Navbar expand="xl" bg="black">
+                  <Container>
+                     <Navbar.Brand href="/"><img
+                        src="/fmnm_blue.png"
+                        width="32"
+                        height="32"
+                        className="d-inline-block align-top"
+                        alt="React Bootstrap logo" />
+                     </Navbar.Brand>
+                     <SearchForm history={this.props.history} />
+                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                     <Navbar.Collapse id="basic-navbar-nav">
+                           <Nav.Link href="/">Home</Nav.Link>
+                           <Nav.Link href="/profile">Profile</Nav.Link>
+                     </Navbar.Collapse>
+                  </Container>
                </Navbar>
                <Switch>
                   <Route exact path="/" component={Home} />
                   <Route path="/shows/:searchTitle" component={ListOfShows} />
                   <Route path="/show/:imdbId" component={ShowInfo} />
+                  <Route path="/season/:imdbIdSeason" component={ListOfSeasonEpisodes} />
+                  <Route path="/episode/:imdbId" component={EpisodeInfo} />
                   <Route component={Notfound} />
                </Switch>
             </div>
