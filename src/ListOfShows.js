@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Table, Image } from 'react-bootstrap'
 import { withRouter, BrowserRouter, Link } from 'react-router-dom'
-import { buildOmdbApiUrlFromComponents } from './Urls'
+import { buildOmdbApiUrlFromComponents, handleImageError } from './Urls'
 
 class ListOfShows extends Component {
    constructor(props) {
@@ -34,7 +34,7 @@ class ListOfShows extends Component {
          const url = buildOmdbApiUrlFromComponents({
             'type': 'series',
             'year': searchYear,
-            's': searchTitle,
+            's': searchTitle.trim(),
          })
          fetch(url)
             .then(result => result.json())
@@ -78,7 +78,7 @@ class ListOfShows extends Component {
                   let poster = show.Poster && show.Poster !== 'N/A' ? show.Poster : "/no-poster.png"
                   return <tr imdbId={show.imdbID} key={index} onClick={this.handleSelectShow}>
                      <td width="1px"><Link to={`/show/${show.imdbID}`}>{index + 1}</Link></td>
-                     <td><Link to={`/show/${show.imdbID}`}><Image height="75px" src={poster} /></Link></td>
+                     <td><Link to={`/show/${show.imdbID}`}><Image height="75px" onError={handleImageError} src={poster} /></Link></td>
                      <td><Link to={`/show/${show.imdbID}`}>{show.Title}</Link></td>
                      <td><Link to={`/show/${show.imdbID}`}>{show.Year}</Link></td>
                   </tr>
@@ -104,7 +104,7 @@ class ListOfShows extends Component {
       return (
          <div className="container">
             < div><b>{header}</b></div >
-            <Table class="table table-sm" variant="dark">{showList}</Table>
+            <Table size="sm" variant="dark">{showList}</Table>
          </div>
       )
    }

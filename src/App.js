@@ -29,7 +29,7 @@ class App extends Component {
       return (
          <Router>
             <div className="container">
-               <Navbar expand="xl" bg="black">
+               <Navbar className="justify-content-between" expand="xl" bg="black">
                   <Container>
                      <Navbar.Brand href="/"><img
                         src="/fmnm_blue.png"

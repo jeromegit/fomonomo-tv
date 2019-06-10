@@ -17,3 +17,8 @@ export function buildOmdbApiUrlFromComponents(urlComponents) {
 
    return buildUrlFromComponents(omdbApiBaseUrl, urlComponents)
 }
+
+   // Use missing image when image can'f be loaded
+export function handleImageError(ev) {
+      ev.target.src = '/no-poster.png'
+   }
