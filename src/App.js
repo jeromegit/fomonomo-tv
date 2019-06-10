@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Nav, Navbar, Container } from 'react-bootstrap'
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { Route, HashRouter as Router, Switch } from 'react-router-dom'
 import './App.css';
 import ListOfShows from './ListOfShows'
 import ListOfSeasonEpisodes from './ListOfSeasonEpisodes'
