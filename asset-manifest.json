@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/react-navbar-search-restapi-table/static/css/main.f8399ae0.chunk.css",
-    "main.js": "/react-navbar-search-restapi-table/static/js/main.d37b45e7.chunk.js",
-    "main.js.map": "/react-navbar-search-restapi-table/static/js/main.d37b45e7.chunk.js.map",
+    "main.js": "/react-navbar-search-restapi-table/static/js/main.0f33f50e.chunk.js",
+    "main.js.map": "/react-navbar-search-restapi-table/static/js/main.0f33f50e.chunk.js.map",
     "runtime~main.js": "/react-navbar-search-restapi-table/static/js/runtime~main.e860d5cb.js",
     "runtime~main.js.map": "/react-navbar-search-restapi-table/static/js/runtime~main.e860d5cb.js.map",
-    "static/js/2.600aaee0.chunk.js": "/react-navbar-search-restapi-table/static/js/2.600aaee0.chunk.js",
-    "static/js/2.600aaee0.chunk.js.map": "/react-navbar-search-restapi-table/static/js/2.600aaee0.chunk.js.map",
+    "static/js/2.38cdb996.chunk.js": "/react-navbar-search-restapi-table/static/js/2.38cdb996.chunk.js",
+    "static/js/2.38cdb996.chunk.js.map": "/react-navbar-search-restapi-table/static/js/2.38cdb996.chunk.js.map",
     "index.html": "/react-navbar-search-restapi-table/index.html",
-    "precache-manifest.afb9d6ba35bb14aac9490533442faf5a.js": "/react-navbar-search-restapi-table/precache-manifest.afb9d6ba35bb14aac9490533442faf5a.js",
+    "precache-manifest.f8f0f94915845f112e00dcf7a67a5b19.js": "/react-navbar-search-restapi-table/precache-manifest.f8f0f94915845f112e00dcf7a67a5b19.js",
     "service-worker.js": "/react-navbar-search-restapi-table/service-worker.js",
     "static/css/main.f8399ae0.chunk.css.map": "/react-navbar-search-restapi-table/static/css/main.f8399ae0.chunk.css.map"
   }
