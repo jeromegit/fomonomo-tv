@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Table, Image } from 'react-bootstrap'
-import { withRouter, BrowserRouter, Link } from 'react-router-dom'
+import { Table } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { buildOmdbApiUrlFromComponents } from './Urls'
 
 export default class ListOfSeasonEpisodes extends Component {
@@ -19,7 +19,7 @@ export default class ListOfSeasonEpisodes extends Component {
       let { imdbIdSeason } = params
       if (imdbIdSeason) {
          const components = imdbIdSeason.split(":")
-         if (components.length == 2) {
+         if (components.length === 2) {
             const imdbID = components[0]
             const season = components[1]
             const url = buildOmdbApiUrlFromComponents({
@@ -45,14 +45,7 @@ export default class ListOfSeasonEpisodes extends Component {
    }
 
    render() {
-      const { params } = this.props.match
-      /*
-            if (this.state.refresh !== true && this.state.searchTitle !== params.searchTitle) {
-               this.setState({ refresh: true })
-               this.searchForTvShows()
-            }
-      */
-      const { apiResult, error } = this.state
+      const { apiResult } = this.state
       let episodeList = ""
       let errorStr = ''
       if (this.state)
@@ -62,13 +55,11 @@ export default class ListOfSeasonEpisodes extends Component {
                episodeList = []
                if (episodes !== undefined) {
                   episodeList = episodes.map((episode, index) => {
-                     //                     return 
                      return <tr imdbId={episode.imdbID} key={index}>
                         <td width="1px">{index + 1}</td>
                         <td><Link to={`/episode/${episode.imdbID}`}>{episode.Title}</Link></td>
                         <td class="text-nowrap">{episode.Released}</td>
                      </tr>
-                     //                     </Link>
                   })
                } else {
                   errorStr = "No episode found"
@@ -77,25 +68,26 @@ export default class ListOfSeasonEpisodes extends Component {
                errorStr = "Error calling API: " + apiResult.Error
             } else {
                errorStr = "Unknown error"
-            }
+            } 
          }
 
       if (episodeList === "" || errorStr !== '') {
          errorStr = <div>{errorStr}</div>
       } else {
-         episodeList = <Table class="table" size="sm" variant="dark">
-            <thead>
-               <tr>
-                  <th>#</th>
-                  <th>Title</th>
-                  <th>Realeased</th>
-               </tr>
-            </thead>
-            <tbody>
-               {episodeList}
-            </tbody>
-         </Table>
-
+         episodeList = <div>Episode list for "{apiResult.Title}". Season {apiResult.Season}
+            <Table class="table" size="sm" variant="dark">
+               <thead>
+                  <tr>
+                     <th>#</th>
+                     <th>Title</th>
+                     <th>Realeased</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {episodeList}
+               </tbody>
+            </Table>
+         </div>
       }
 
       return (

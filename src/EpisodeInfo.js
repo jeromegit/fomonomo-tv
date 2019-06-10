@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Image, Card } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Card } from 'react-bootstrap'
 import { buildOmdbApiUrlFromComponents, handleImageError } from './Urls'
 
 export default class episodeInfo extends Component {
@@ -34,15 +33,8 @@ export default class episodeInfo extends Component {
    componentDidMount() {
       this.fetchEpisodeInfo()
    }
-   /*
-      handleSelectSeason = e => {
-         const season = e.target.parentElement.getAttribute('season');
-         alert("need season:" + season)
-      }
-   */
 
    render() {
-      const { params } = this.props.match
       const { apiResult } = this.state
       let episodeCard = ""
       let error = ''
@@ -83,11 +75,7 @@ export default class episodeInfo extends Component {
             error = "Unknown error"
          }
       }
-      let header = ""
-      if (episodeCard !== "" && error === '') {
-         header = "Results of search (" + apiResult.totalResults + ")"
-      } else {
-         header = error
+      if (episodeCard === "" || error !== '') {
          episodeCard = error
       }
 

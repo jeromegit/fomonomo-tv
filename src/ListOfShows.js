@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Table, Image } from 'react-bootstrap'
-import { withRouter, BrowserRouter, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { buildOmdbApiUrlFromComponents, handleImageError } from './Urls'
 
 class ListOfShows extends Component {
@@ -52,12 +52,12 @@ class ListOfShows extends Component {
    }
 
    componentDidUpdate() {
-      let aa = 0
    }
+
    handleSelectShow = e => {
-      const imdbID = e.target.parentElement.getAttribute('imdbid');
+      // const imdbID = e.target.parentElement.getAttribute('imdbid');
       // console.log('We need to get the details for ', imdbID);
-      //      alert('We need to get the details for '+imdbID);
+      // alert('We need to get the details for '+imdbID);
    }
 
    render() {
@@ -80,7 +80,7 @@ class ListOfShows extends Component {
                      <td width="1px"><Link to={`/show/${show.imdbID}`}>{index + 1}</Link></td>
                      <td><Link to={`/show/${show.imdbID}`}><Image height="75px" onError={handleImageError} src={poster} /></Link></td>
                      <td><Link to={`/show/${show.imdbID}`}>{show.Title}</Link></td>
-                     <td><Link to={`/show/${show.imdbID}`}>{show.Year}</Link></td>
+                     <td class="text-nowrap"><Link to={`/show/${show.imdbID}`}>{show.Year}</Link></td>
                   </tr>
                })
             } else {
@@ -95,7 +95,21 @@ class ListOfShows extends Component {
 
       let header = ""
       if (showList !== "" && error === '') {
-         header = "Results of search (" + apiResult.totalResults + ")"
+         header = "Found " + apiResult.totalResults + " matches."
+         showList = <Table class="table" size="sm" variant="dark">
+            <thead>
+               <tr>
+                  <th>#</th>
+                  <th>Poster</th>
+                  <th>Title</th>
+                  <th>Years</th>
+               </tr>
+            </thead>
+            <tbody>
+               {showList}
+            </tbody>
+         </Table>
+
       } else {
          header = error
          showList = ""

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Image, Card } from 'react-bootstrap'
+import { Card, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { buildOmdbApiUrlFromComponents, handleImageError } from './Urls'
 import './ShowInfo.css'
@@ -41,7 +41,6 @@ export default class ShowInfo extends Component {
       }
    */
    render() {
-      const { params } = this.props.match
       const { apiResult } = this.state
       let showCard = ""
       let error = ''
@@ -75,7 +74,7 @@ export default class ShowInfo extends Component {
             const totalSeasons = showInfo.totalSeasons;
             let listOfSeasons = []
             for (let season = 1; season <= totalSeasons; season++) {
-               listOfSeasons.push(<li key={season}><Link to={`/season/${showInfo.imdbID}:${season}`}><i>Season {season}</i></Link></li>)
+               listOfSeasons.push(<Link to={`/season/${showInfo.imdbID}:${season}`}><span ><Badge variant="secondary">Season {season}</Badge> </span></Link>)
             }
             const posterImage = showInfo.Poster && showInfo.Poster !== 'N/A' ? showInfo.Poster : "/no-poster.png"
             showCard = <Card bg="dark" text="white" >
@@ -85,7 +84,10 @@ export default class ShowInfo extends Component {
                   <Card.Text>
                      {cardText}
                      <br />
-                     <b>{totalSeasons} Seasons:</b><ul>{listOfSeasons}</ul>
+                     <b>{totalSeasons} Seasons:</b>
+                     <div>
+                        {listOfSeasons}
+                     </div>
                   </Card.Text>
                </Card.Body>
             </Card>
@@ -95,11 +97,7 @@ export default class ShowInfo extends Component {
             error = "Unknown error"
          }
       }
-      let header = ""
-      if (showCard !== "" && error === '') {
-         header = "Results of search (" + apiResult.totalResults + ")"
-      } else {
-         header = error
+      if (showCard === "" || error !== '') {
          showCard = error
       }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Nav, Navbar, NavDropdown, Image, Container } from 'react-bootstrap'
-import { Route, NavLink, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { Nav, Navbar, Container } from 'react-bootstrap'
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import './App.css';
 import ListOfShows from './ListOfShows'
 import ListOfSeasonEpisodes from './ListOfSeasonEpisodes'
@@ -9,7 +9,7 @@ import EpisodeInfo from './EpisodeInfo'
 import SearchForm from './SearchForm';
 import Home from './Home';
 import Notfound from './NotFound'
-import history from './history'
+// import history from './history'
 
 class App extends Component {
    constructor(props) {
