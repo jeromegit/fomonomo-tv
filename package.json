@@ -2,7 +2,7 @@
   "name": "react-narbar-search-restapi-table",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://jeromegit.github.io/react-navbar-search-restapi-table",
+  "homepage": "https://jeromegit.github.io/fomonomo-tv",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "gh-pages": "^2.0.1",

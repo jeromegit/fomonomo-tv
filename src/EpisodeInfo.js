@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { buildOmdbApiUrlFromComponents, handleImageError } from './Urls'
 
 export default class episodeInfo extends Component {
@@ -41,26 +42,15 @@ export default class episodeInfo extends Component {
       if (apiResult !== "") {
          if (apiResult.Response === "True") {
             let episodeInfo = apiResult
-            /*
-                       let topItems = ['Title', 'Season', 'Episode', 'Year', 'Rated', 'Released'];
-                       const episodeCardTop = topItems.map((item) => {
-                          return <div> <b>{item}:</b> {episodeInfo[item]}<br /></div>
-                       })
-                       let bottomItems = ['Plot', 'Actors', 'Director', 'Language', 'imdbRating'];
-                       const episodeCardBottom = bottomItems.map((item) => {
-                          return <div> <b>{item}:</b> {episodeInfo[item]}<br /></div>
-                       })
-                       episodeCard = <table><tr><td><Image height="180px" width="200px" src={episodeInfo.Poster} /></td><td width="500px">{episodeCardTop}</td></tr>
-                          <tr><td colSpan="2" valign="top">{episodeCardBottom}</td></tr>
-                       </table>
-                       */
-            //            episodeCard = <div><Image height="200px" src={episodeInfo.Poster}/>{episodeCard}</div>
             const cardTextItems = ['Season', 'Episode', 'Year', 'Rated', 'Released', 'Plot', 'Actors', 'Director', 'Language', 'imdbRating']
             const cardText = cardTextItems.map((item) => {
                return <div> <b>{item}:</b> <i>{episodeInfo[item]}</i><br /></div>
             })
+            let posterImageEncodedUri = encodeURIComponent(episodeInfo.Poster)
             episodeCard = <Card bg="dark" text="white" >
-               <Card.Img variant="top" class="poster-image mx-auto d-block img-responsive" onError={handleImageError} src={episodeInfo.Poster} />
+               <Link to={`/poster/${posterImageEncodedUri}`}>
+                  <Card.Img variant="top" class="poster-image mx-auto d-block img-responsive" onError={handleImageError} src={episodeInfo.Poster} />
+               </Link>
                <Card.Body>
                   <Card.Title>"{episodeInfo.Title}"</Card.Title>
                   <Card.Text>

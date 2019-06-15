@@ -51,9 +51,3 @@ class SearchForm extends Component {
 }
 
 export default withRouter(SearchForm)
-
-/*
-            {this.state.redirectToPage && (
-               <Redirect to={this.state.pageToRedirect} />
-            )}
-*/

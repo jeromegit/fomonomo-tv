@@ -77,8 +77,11 @@ export default class ShowInfo extends Component {
                listOfSeasons.push(<Link to={`/season/${showInfo.imdbID}:${season}`}><span ><Badge variant="secondary">Season {season}</Badge> </span></Link>)
             }
             const posterImage = showInfo.Poster && showInfo.Poster !== 'N/A' ? showInfo.Poster : "/no-poster.png"
+            let posterImageEncodedUri = encodeURIComponent(posterImage)
             showCard = <Card bg="dark" text="white" >
-               <Card.Img variant="top" class="poster-image mx-auto d-block" onError={handleImageError} src={posterImage} />
+               <Link to={`/poster/${posterImageEncodedUri}`}>
+                  <Card.Img variant="top" class="poster-image mx-auto d-block" onError={handleImageError} src={posterImage} />
+               </Link>
                <Card.Body>
                   <Card.Title>{showInfo.Title}</Card.Title>
                   <Card.Text>
@@ -90,7 +93,7 @@ export default class ShowInfo extends Component {
                      </div>
                   </Card.Text>
                </Card.Body>
-            </Card>
+            </Card >
          } else if (apiResult.Error) {
             error = "Error calling API: " + apiResult.Error
          } else {

@@ -4,9 +4,10 @@ import { Route, HashRouter as Router, Switch } from 'react-router-dom'
 import './App.css';
 import ListOfShows from './ListOfShows'
 import ListOfSeasonEpisodes from './ListOfSeasonEpisodes'
+import Poster from './Poster'
 import ShowInfo from './ShowInfo'
 import EpisodeInfo from './EpisodeInfo'
-import SearchForm from './SearchForm';
+import SearchForm from './SearchForm'
 import Home from './Home';
 import Notfound from './NotFound'
 // import history from './history'
@@ -52,6 +53,7 @@ class App extends Component {
                   <Route path="/show/:imdbId" component={ShowInfo} />
                   <Route path="/season/:imdbIdSeason" component={ListOfSeasonEpisodes} />
                   <Route path="/episode/:imdbId" component={EpisodeInfo} />
+                  <Route path="/poster/:encodedUri" component={Poster} />
                   <Route component={Notfound} />
                </Switch>
             </div>

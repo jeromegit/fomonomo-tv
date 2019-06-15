@@ -1,1 +1,3 @@
-Show moer than the first 10 results
+Show more than the first 10 results
+publish/host it on github pages which doesn't seem to work currently 
+when clicking on the poster, show the whole poster size
