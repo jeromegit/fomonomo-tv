@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/fomonomo-tv/precache-manifest.edd29c481ca6bfb1c050f452229e4c48.js"
+  "/fomonomo-tv/precache-manifest.d8fd6510c4638f60c5ddc024ef9e9ae3.js"
 );
 
 self.addEventListener('message', (event) => {
