@@ -6,11 +6,12 @@
 .lander h1 {
    font-family: "Open Sans", sans-serif;
    font-weight: 600;
-   color: #999;
+   color: #ccc;
  }
  
 .lander p {
-   color: #999;
+   color: #ccc;
+   font-size: 1.2rem
  }
  
 .lander div {

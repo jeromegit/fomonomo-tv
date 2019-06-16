@@ -40,12 +40,9 @@ class SearchForm extends Component {
 
    render() {
       return (
-                  <div>
-            <Form href="#search" onSubmit={this.handleFormSubmit} inline>
-               <FormControl onChange={this.handleChange} bg="dark" type="text" name="searchTitle" placeholder="Search TV show"
-                  className_="mr-sm-2" />
-            </Form>
-         </div>
+         <Form href="#search" onSubmit={this.handleFormSubmit} inline className_="mx-0" >
+            <FormControl onChange={this.handleChange} bg="dark" type="text" name="searchTitle" placeholder="Search TV show"/>
+         </Form>
       );
    }
 }

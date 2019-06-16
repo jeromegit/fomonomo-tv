@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav, Navbar, Container } from 'react-bootstrap'
+import { Nav, Navbar } from 'react-bootstrap'
 import { Route, HashRouter as Router, Switch } from 'react-router-dom'
 import './App.css';
 import ListOfShows from './ListOfShows'
@@ -29,11 +29,9 @@ class App extends Component {
    render() {
       return (
          <Router>
-            <div className="container">
-               <Navbar className="justify-content-between" expand="xl" bg="black">
-                  <Container>
+               <Navbar className="navbar-light justify-content-between" expand="" bg="black">
                      <Navbar.Brand href="/"><img
-                        src="/fmnm_blue.png"
+                        src="/fmnmtv.png"
                         width="32"
                         height="32"
                         className="d-inline-block align-top"
@@ -45,7 +43,6 @@ class App extends Component {
                            <Nav.Link href="/">Home</Nav.Link>
                            <Nav.Link href="/profile">Profile</Nav.Link>
                      </Navbar.Collapse>
-                  </Container>
                </Navbar>
                <Switch>
                   <Route exact path="/" component={Home} />
@@ -56,7 +53,6 @@ class App extends Component {
                   <Route path="/poster/:encodedUri" component={Poster} />
                   <Route component={Notfound} />
                </Switch>
-            </div>
          </Router>
       );
    }

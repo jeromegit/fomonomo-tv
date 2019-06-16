@@ -61,6 +61,7 @@ class ListOfShows extends Component {
    }
 
    render() {
+      document.activeElement.blur() // make the keyboard disappear
       const { params } = this.props.match
       if (this.state.refresh !== true && this.state.searchTitle !== params.searchTitle) {
          this.setState({ refresh: true })
