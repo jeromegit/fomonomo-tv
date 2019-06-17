@@ -1,20 +1,20 @@
 {
-  "name": "react-narbar-search-restapi-table",
+  "name": "fomonomo-tv",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://jeromegit.github.io/fomonomo-tv",
+  "homepage": "https://fomonomo.tv",
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "gh-pages": "^2.0.1",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
+    "serverless-finch": "^2.3.2",
     "react-scripts": "3.0.1"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "bash ./scripts/deploy.bash",
+    "remove": "bash ./scripts/remove.bash",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

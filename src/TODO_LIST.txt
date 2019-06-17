@@ -3,3 +3,5 @@ publish/host it on github pages which doesn't seem to work currently
 change color of colapsed menu and the square around it when selected
 import the component the right way as described here: https://react-bootstrap.netlify.com/getting-started/introduction
 DONE: when entering the title one iPhone I need to click Done for the keyboard to disappear
+automatically test 
+automatically deploy using npm deploy

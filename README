@@ -1,0 +1,35 @@
+# use the macOS github desktop app to clone: https://github.com/jeromegit/fomonomo-tv
+# but the cli way to do it assuming that it's clone into the directory fomonomo-tv:
+git clone git@github.com:jeromegit/fomonomo-tv.git fomonomo-tv
+
+# to install dependencies
+yarn install
+
+# to see if it still works locally
+yarn run
+
+# Useful information
+https://medium.com/serverlessguru/automate-static-web-app-deployment-on-aws-in-minutes-serverless-custom-template-77069303c618
+# run to create static-website app that we will merge with our react web app clone earlier
+sls create --template-url https://github.com/serverless-guru/templates/tree/master/serverless/static-website
+# merge the 2 package.json and
+# copy the scripts
+cp -r static-website/scripts .
+# cp the serverless.yml file
+cp static-website/serverless.yml .
+# rerun this so that it installs the serverless-finch plug-in mentioned in the serverless.yml file
+yarn install
+
+# Build the app
+yarn build
+
+# deploy the app on aws either for dev or prod
+yarn run deploy dev us-west-2
+yarn run deploy prod us-west-2
+
+# I had to jump thru hoops to connect AWS Route 53 that holds the domain fomonomo.tv to connect with my CloudFront
+# I had to create a CA certification using DNS which takes a while to issue
+# it kept of failing because the certificate needed to be created on the US East (N. Virginia) region... grrrrr!
+# See here for details: https://aws.amazon.com/blogs/security/easier-certificate-validation-using-dns-with-aws-certificate-manager/
+# Reminder that I use S3 as static website hosting and
+# I use CloudFront (like a CDN) on front of it to allow to do smarter redirect of error and makes the new files available to the world faster
