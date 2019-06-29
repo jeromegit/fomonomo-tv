@@ -42,8 +42,8 @@ export default class PersonInfo extends Component {
          let personInfo = apiResult
          const cardTextItems = [
             { key: 'overview', label: 'Plot' },
-            { key: 'birthday', label: 'Birthday' },
-            { key: 'deathday', label: 'Death day' },
+            { key: 'birthday', label: 'Born' },
+            { key: 'deathday', label: 'Passed' },
             { key: 'place_of_birth', label: 'Place of birth' },
             { key: 'biography', label: 'Bio' },
             { key: 'homepage', label: 'Official Site', url: true },
@@ -65,10 +65,12 @@ export default class PersonInfo extends Component {
 
          // list of shows (from credits)
          let listOfShows = []
+         let numberOfShows = 0
          if (personInfo.tv_credits) {
             let shows = personInfo.tv_credits.cast
             if (shows) {
                listOfShows = shows.map((show) => {
+                  numberOfShows++
                   let poster = buildTmdbUrlForImagePathAndSize(show.poster_path, "w45")
                   let linkToShow = "/show/" + show.id
                   let character = show.character ? <div><i>{show.character}</i></div> : ""
@@ -110,7 +112,7 @@ export default class PersonInfo extends Component {
                <Card.Text>
                   {cardText}
                   <br />
-                  <b>TV Acting</b>:
+                  <b>TV Acting ({numberOfShows} credits)</b>:
                   <div>
                      <table>
                         {listOfShows}

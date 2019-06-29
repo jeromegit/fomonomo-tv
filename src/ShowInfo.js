@@ -86,7 +86,7 @@ export default class ShowInfo extends Component {
                   let linkToCast = "/person/" + castMember.id
                   let character = castMember.character ? <div><i>{castMember.character}</i></div> : ""
                   return <tr>
-                     <td><Link to={linkToCast}><img alt="Image of {castMember.name}" src={castPhoto} /></Link></td>
+                     <td><Link to={linkToCast}><img alt="{castMember.name}" src={castPhoto} /></Link></td>
                      <td><Link to={linkToCast}><b>{castMember.name}</b></Link>{character}</td>
                   </tr>
                })

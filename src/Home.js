@@ -1,6 +1,6 @@
 import React from 'react'
 import "./Home.css"
-
+import tv_image from './fmnmtv_10.png'
 export default class Home extends React.Component {
    render() {
       //   const tmdb_logo = '/no-poster.png'
@@ -8,6 +8,9 @@ export default class Home extends React.Component {
       return (
          <div className="lander">
             <h1>FoMoNoMo TV</h1>
+            <img src={tv_image}/>
+            <br/>
+            <br/>
             <p>Never miss your favorite TV shows again</p>
             <div class="tmdb_logo">
                <table cellPadding="3">
