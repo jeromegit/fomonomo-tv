@@ -1,3 +1,11 @@
 import React from 'react'
-const Notfound = () => <h1>Not found</h1>
-export default Notfound
+import "./Home.css"
+
+export default class NotFound extends React.Component {
+   render() {
+      return (
+         <div class="lander"><p>Sorry. I'm not sure what you are looking for :-(</p></div>
+      );
+
+   }
+}

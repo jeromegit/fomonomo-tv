@@ -5,3 +5,6 @@ import the component the right way as described here: https://react-bootstrap.ne
 DONE: when entering the title one iPhone I need to click Done for the keyboard to disappear
 automatically test 
 automatically deploy using npm deploy
+check out the API for TMDB since it has some pretty cool features such as trending: https://developers.themoviedb.org/3/trending/get-trending
+add back the fields to the show description including cast using the credits API search
+change the readme so that it's no longer the stock Create React App page

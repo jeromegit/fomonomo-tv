@@ -83,10 +83,11 @@ export default class ShowInfo extends Component {
             if (castMembers) {
                listOfCast = castMembers.map((castMember) => {
                   let castPhoto = buildTmdbUrlForImagePathAndSize(castMember.profile_path, "w45")
-                  let linkToCast = "/cast/" + castMember.id
+                  let linkToCast = "/person/" + castMember.id
+                  let character = castMember.character ? <div><i>{castMember.character}</i></div> : ""
                   return <tr>
-                     <td><Link to={linkToCast}><img src={castPhoto} /></Link></td>
-                     <td><Link to={linkToCast}><i>{castMember.name}</i></Link><i> "{castMember.character}"</i></td>
+                     <td><Link to={linkToCast}><img alt="Image of {castMember.name}" src={castPhoto} /></Link></td>
+                     <td><Link to={linkToCast}><b>{castMember.name}</b></Link>{character}</td>
                   </tr>
                })
             }

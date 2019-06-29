@@ -68,7 +68,7 @@ class ListOfShows extends Component {
       if (apiResult !== "") {
          let shows = apiResult.results
          showList = []
-         if (shows !== undefined) {
+         if (shows !== undefined && apiResult.total_results ) {
             showList = shows.map((show, index) => {
                let poster = buildTmdbUrlForImagePathAndSize(show.backdrop_path)
                return <tr imdbId={show.id} key={index} onClick={this.handleSelectShow}>

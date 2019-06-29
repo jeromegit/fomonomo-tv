@@ -45,14 +45,26 @@ export function buildTmdbApiUrlForShowInformation(showId, seasonId=0, episodeId=
    }
    // tack on the api_key
    url = url + "?api_key=" + apiKey
-   url = url + "&append_to_response=credits"
+   url = url + "&append_to_response=images,credits"
+   
+   return url
+}
+
+export function buildTmdbApiUrlForPersonInformation(personId) {
+   const tmdbApiBaseUrl = "https://api.themoviedb.org/3/person/"
+   // URL: https://api.themoviedb.org/3/person/1001657?api_key=1c40e7b79848bde76ff5b90fe48cff04   info about a specific person
+   let url = tmdbApiBaseUrl+personId
+   
+   // tack on the api_key and append response for extra info
+   url = url + "?api_key=" + apiKey
+   url = url + "&append_to_response=images,tv_credits"
    
    return url
 }
 
 export function buildTmdbUrlForImagePathAndSize(imagePath, size = "w300") {
    if (!imagePath || imagePath === undefined || imagePath === "") {
-      return "/no-poster.png"
+      return "/no-poster-small.png"
    }
    if (!imagePath.startsWith("/")) {  // Assumes that imagePath already has a leading "/. Otherwise, add it
       imagePath = "/" + imagePath

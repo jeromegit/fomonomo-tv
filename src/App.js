@@ -10,7 +10,7 @@ import EpisodeInfo from './EpisodeInfo'
 import SearchForm from './SearchForm'
 import Home from './Home';
 import Notfound from './NotFound'
-// import history from './history'
+import PersonInfo from './PersonInfo';
 
 class App extends Component {
    constructor(props) {
@@ -41,7 +41,6 @@ class App extends Component {
                      <Navbar.Toggle aria-controls="basic-navbar-nav" />
                      <Navbar.Collapse id="basic-navbar-nav">
                            <Nav.Link href="/">Home</Nav.Link>
-                           <Nav.Link href="/profile">Profile</Nav.Link>
                      </Navbar.Collapse>
                </Navbar>
                <Switch>
@@ -51,6 +50,7 @@ class App extends Component {
                   <Route path="/season/:idSeason" component={ListOfSeasonEpisodes} />
                   <Route path="/episode/:idSeasonEpisode" component={EpisodeInfo} />
                   <Route path="/poster/:encodedUri" component={Poster} />
+                  <Route path="/person/:personId" component={PersonInfo} />
                   <Route component={Notfound} />
                </Switch>
          </Router>
