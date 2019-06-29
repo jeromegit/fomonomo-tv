@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { buildOmdbApiUrlFromComponents } from './Urls'
+import { buildTmdbApiUrlForShowInformation } from './Urls'
 
 export default class ListOfSeasonEpisodes extends Component {
    constructor(props) {
@@ -16,16 +16,13 @@ export default class ListOfSeasonEpisodes extends Component {
 
    fetchSeasonInfo = what => {
       const { params } = this.props.match
-      let { imdbIdSeason } = params
-      if (imdbIdSeason) {
-         const components = imdbIdSeason.split(":")
+      let { idSeason } = params
+      if (idSeason) {
+         const components = idSeason.split(":")
          if (components.length === 2) {
-            const imdbID = components[0]
+            const id = components[0]
             const season = components[1]
-            const url = buildOmdbApiUrlFromComponents({
-               'i': imdbID,
-               'Season': season,
-            });
+            const url = buildTmdbApiUrlForShowInformation(id, season)
             fetch(url)
                .then(result => result.json())
                .then(result => {
@@ -50,37 +47,38 @@ export default class ListOfSeasonEpisodes extends Component {
       let errorStr = ''
       if (this.state)
          if (apiResult !== "") {
-            if (apiResult.Response === "True") {
-               let episodes = apiResult.Episodes
-               episodeList = []
-               if (episodes !== undefined) {
-                  episodeList = episodes.map((episode, index) => {
-                     return <tr imdbId={episode.imdbID} key={index}>
-                        <td width="1px">{index + 1}</td>
-                        <td><Link to={`/episode/${episode.imdbID}`}>{episode.Title}</Link></td>
-                        <td class="text-nowrap">{episode.Released}</td>
-                     </tr>
-                  })
-               } else {
-                  errorStr = "No episode found"
-               }
-            } else if (apiResult.Error) {
-               errorStr = "Error calling API: " + apiResult.Error
+            let episodes = apiResult.episodes
+            episodeList = []
+            if (episodes !== undefined) {
+               episodeList = episodes.map((episode, index) => {
+                  let episode_composite_id = [episode.show_id, episode.season_number, episode.episode_number].join(":")
+                  return <tr id={episode.episode_number} key={index}>
+                     <td width="1px">{index + 1}</td>
+                     <td><Link to={`/episode/${episode_composite_id}`}>{episode.name}</Link></td>
+                     <td>{episode.vote_average}</td>
+                     <td class="text-nowrap">{episode.air_date}</td>
+                  </tr>
+               })
             } else {
-               errorStr = "Unknown error"
-            } 
+               errorStr = "No episode found"
+            }
+         } else if (apiResult.Error) {
+            errorStr = "Error calling API: " + apiResult.Error
+         } else {
+            // errorStr = "Unknown error"
          }
 
       if (episodeList === "" || errorStr !== '') {
          errorStr = <div>{errorStr}</div>
       } else {
-         episodeList = <div>Episode list for "{apiResult.Title}". Season {apiResult.Season}
+         episodeList = <div>Episode list for "{apiResult.name}"
             <Table class="table" size="sm" variant="dark">
                <thead>
                   <tr>
                      <th>#</th>
                      <th>Title</th>
-                     <th>Realeased</th>
+                     <th>Rating</th>
+                     <th>Released</th>
                   </tr>
                </thead>
                <tbody>

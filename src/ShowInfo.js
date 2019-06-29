@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { buildOmdbApiUrlFromComponents, handleImageError } from './Urls'
+import { buildTmdbApiUrlForShowInformation, buildTmdbUrlForImagePathAndSize, handleImageError } from './Urls'
 import './ShowInfo.css'
 
 export default class ShowInfo extends Component {
@@ -16,9 +16,9 @@ export default class ShowInfo extends Component {
 
    fetchShowInfo = what => {
       const { params } = this.props.match
-      let { imdbId } = params
-      if (imdbId) {
-         const url = buildOmdbApiUrlFromComponents({ 'i': imdbId })
+      let { id } = params
+      if (id) {
+         const url = buildTmdbApiUrlForShowInformation(id)
          fetch(url)
             .then(result => result.json())
             .then(result => {
@@ -45,61 +45,85 @@ export default class ShowInfo extends Component {
       let showCard = ""
       let error = ''
       if (apiResult !== "") {
-         if (apiResult.Response === "True") {
-            let showInfo = apiResult
-            /*
-            let topItems = ['Title', 'Year', 'Rated', 'Released'];
-            const showCardTop = topItems.map((item) => {
-               return <div> <b>{item}:</b> {showInfo[item]}<br /></div>
-            })
-            let bottomItems = ['Genre', 'Plot', 'Actors', 'Language', 'imdbRating'];
-            const showCardBottom = bottomItems.map((item) => {
-               return <div> <b>{item}:</b> {showInfo[item]}<br /></div>
-            })
-            const totalSeasons = showInfo.totalSeasons;
-            let listOfSeasons = []
-            for(let season=1; season<=totalSeasons; season++) {
-               listOfSeasons.push(<li key={season}><Link to={`/season/${showInfo.imdbID}:${season}`}>Season #{season}</Link></li>)
+         let showInfo = apiResult
+         const cardTextItems = [
+            { key: 'overview', label: 'Plot' },
+            { key: 'first_air_date', label: 'First aired' },
+            { key: 'last_air_date', label: 'Last aired' },
+            { key: 'number_of_episodes', label: '# episodes' },
+            { key: 'homepage', label: 'Homepage', url: true },
+            { key: 'popularity', label: 'Popularity' },
+            { key: 'vote_average', label: 'Rating' }
+         ]
+         //         'overview', 'origin_country', 'languages', 'genres', 'networks'
+         const cardText = cardTextItems.map((item) => {
+            let label = item.label
+            let value = showInfo[item.key]
+            if (value) {
+               if (item.url) {
+                  value = <a href={value}>Go to {label}</a>
+               }
+               return <div> <b>{label}:</b> <i>{value}</i><br /></div>
+            } else {
+               return ""
             }
-            showCard = <table><tr><td><Image height="180px" src={showInfo.Poster} /></td><td>{showCardTop}</td></tr>
-               <tr><td colSpan="2" valign="top">{showCardBottom}</td></tr>
-               <tr><td colSpan="2" valign="top"><br/><b>{totalSeasons} Seasons:</b><ul>{listOfSeasons}</ul></td></tr>
-            </table>
-            //            showCard = <div><Image height="200px" src={showInfo.Poster}/>{showCard}</div>
-            */
-            const cardTextItems = ['Year', 'Rated', 'Released', 'Genre', 'Plot', 'Actors', 'Language', 'imdbRating'];
-            const cardText = cardTextItems.map((item) => {
-               return <div> <b>{item}:</b> <i>{showInfo[item]}</i><br /></div>
-            })
-            const totalSeasons = showInfo.totalSeasons;
-            let listOfSeasons = []
-            for (let season = 1; season <= totalSeasons; season++) {
-               listOfSeasons.push(<Link to={`/season/${showInfo.imdbID}:${season}`}><span ><Badge variant="secondary">Season {season}</Badge> </span></Link>)
-            }
-            const posterImage = showInfo.Poster && showInfo.Poster !== 'N/A' ? showInfo.Poster : "/no-poster.png"
-            let posterImageEncodedUri = encodeURIComponent(posterImage)
-            showCard = <Card bg="dark" text="white" >
-               <Link to={`/poster/${posterImageEncodedUri}`}>
-                  <Card.Img variant="top" class="poster-image mx-auto d-block" onError={handleImageError} src={posterImage} />
-               </Link>
-               <Card.Body>
-                  <Card.Title>{showInfo.Title}</Card.Title>
-                  <Card.Text>
-                     {cardText}
-                     <br />
-                     <b>{totalSeasons} Seasons:</b>
-                     <div>
-                        {listOfSeasons}
-                     </div>
-                  </Card.Text>
-               </Card.Body>
-            </Card >
-         } else if (apiResult.Error) {
-            error = "Error calling API: " + apiResult.Error
-         } else {
-            error = "Unknown error"
+         })
+
+         // List of seasons
+         const totalSeasons = showInfo.number_of_seasons;
+         let listOfSeasons = []
+         for (let season = 1; season <= totalSeasons; season++) {
+            listOfSeasons.push(<Link to={`/season/${showInfo.id}:${season}`}><span ><Badge variant="secondary">Season {season}</Badge> </span></Link>)
          }
+
+         // Cast (from credits)
+         let listOfCast = []
+         if (showInfo.credits) {
+            let castMembers = showInfo.credits.cast
+            if (castMembers) {
+               listOfCast = castMembers.map((castMember) => {
+                  let castPhoto = buildTmdbUrlForImagePathAndSize(castMember.profile_path, "w45")
+                  let linkToCast = "/cast/" + castMember.id
+                  return <tr>
+                     <td><Link to={linkToCast}><img src={castPhoto} /></Link></td>
+                     <td><Link to={linkToCast}><i>{castMember.name}</i></Link><i> "{castMember.character}"</i></td>
+                  </tr>
+               })
+            }
+         }
+         const posterImage = buildTmdbUrlForImagePathAndSize(showInfo.poster_path)
+         let posterImageEncodedUri = encodeURIComponent(posterImage)
+         showCard = <Card bg="dark" text="white" >
+            <Link to={`/poster/${posterImageEncodedUri}`}>
+               <Card.Img variant="top" class="poster-image mx-auto d-block" onError={handleImageError} src={posterImage} />
+            </Link>
+            <Card.Body>
+               <Card.Title>{showInfo.name}</Card.Title>
+               <Card.Text>
+                  {cardText}
+                  <br />
+                  <b>Cast</b>:
+                  <div>
+                     <table>
+                        {listOfCast}
+                     </table>
+                  </div>
+                  <br />
+                  <b>{totalSeasons} Seasons:</b>
+                  <div>
+                     {listOfSeasons}
+                  </div>
+                  <br />
+                  <br />
+               </Card.Text>
+            </Card.Body>
+         </Card >
+      } else if (apiResult.Error) {
+         error = "Error calling API: " + apiResult.Error
+      } else {
+         // error = "Unknown error"
       }
+
       if (showCard === "" || error !== '') {
          showCard = error
       }

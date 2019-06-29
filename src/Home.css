@@ -32,4 +32,16 @@
 .notes p {
    color: rgb(214, 20, 20);
  }
+
+
+.tmdb_logo {
+  position: fixed;
+  bottom: 1px;
+  color: #01d277;
+  font-size: .9rem;
+  }
+
+.tmdb_img_logo {
+  zoom: 0.40;
+}
  

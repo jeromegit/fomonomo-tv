@@ -47,9 +47,9 @@ class App extends Component {
                <Switch>
                   <Route exact path="/" component={Home} />
                   <Route path="/shows/:searchTitle" component={ListOfShows} />
-                  <Route path="/show/:imdbId" component={ShowInfo} />
-                  <Route path="/season/:imdbIdSeason" component={ListOfSeasonEpisodes} />
-                  <Route path="/episode/:imdbId" component={EpisodeInfo} />
+                  <Route path="/show/:id" component={ShowInfo} />
+                  <Route path="/season/:idSeason" component={ListOfSeasonEpisodes} />
+                  <Route path="/episode/:idSeasonEpisode" component={EpisodeInfo} />
                   <Route path="/poster/:encodedUri" component={Poster} />
                   <Route component={Notfound} />
                </Switch>
